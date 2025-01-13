@@ -8,6 +8,7 @@
                     <table id="example" class="table">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama <i class="fas fa-file-signature"></i></th>
                                 <th>Nomor HP <i class="fas fa-phone"></i></th>
                                 <th>Alamat <i class="fas fa-map-marked-alt"></i></th>
@@ -15,20 +16,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($suppliers as $supplier)
+                            @foreach($suppliers as $no => $supplier)
                             <tr>
+                                <td>{{ ++ $no }}</td>
                                 <td>{{ $supplier->name }}</td>
                                 <td>{{ $supplier->contact_person }}</td>
                                 <td>{{ $supplier->address }}</td>
                                 <td>
                                     <a href="{{ route('supplier.edit',$supplier->id) }}" class="btn btn-info btn-sm ">Edit</a>
-                                    <button 
-                                    class="btn btn-danger btn-sm" 
-                                    wire:click="delete({{ $supplier->id }})"
-                                    onclick="confirm('Apakah kamu yakin ingin menghapus data ini?') || event.stopImmediatePropagation();"
-                                >
-                                    Hapus
-                                </button>
+                                    <form id="deleteForm{{ $supplier->id }}" class="d-inline"
+                                        action="{{ route('supplier.delete', $supplier->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="confirmDelete({{ $supplier->id }})">Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

@@ -23,24 +23,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])->group(function () {
    
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [UserController::class, 'index'])->name('home');
     
     Route::get('/admin/pengguna', [UserController::class,'index'])->name('pengguna.index');
     Route::get('/admin/pengguna/{id}/edit',[UserController::class,'edit'])->name('pengguna.edit');
     Route::get('/admin/pengguna/Laporan',[UserController::class,'report'])->name('pengguna.laporan');
     Route::get('/admin/pengguna/print',[UserController::class,'generatePDF'])->name('pengguna.print');
+    Route::delete('/admin/pengguna/delete/{id}',[UserController::class,'delete'])->name('pengguna.delete');
 
     Route::get('/admin/supplier', [SupplierController::class,'index'])->name('supplier.index');
     Route::get('/admin/supplier/{id}/edit',[SupplierController::class, 'edit'])->name('supplier.edit');
+    Route::delete('/admin/supplier/delete/{id}',[SupplierController::class, 'delete'])->name('supplier.delete');
     
     Route::get('/admin/kategori',[CategoryController::class,'index'])->name('category.index');
     Route::get('/admin/kategori/{id}/edit',[CategoryController::class, 'edit'])->name('category.edit');
+    Route::delete('/admin/kategori/delete/{id}',[CategoryController::class, 'delete'])->name('category.delete');
     
     Route::get('/admin/produk',[ProductController::class,'index'])->name('product.index');
 Route::get('/admin/produk/tambah',[ProductController::class,'create'])->name('product.create');
 Route::get('/admin/produk/{id}/edit',[ProductController::class, 'edit'])->name('product.edit');
 Route::get('/admin/produk/laporan',[ProductController::class,'report'])->name('product.report');
 Route::get('/admin/produk/print',[ProductController::class,'generatePDF'])->name('product.print');
+Route::delete('/admin/produk/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');
 
 
 

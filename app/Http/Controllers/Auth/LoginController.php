@@ -30,11 +30,10 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (auth()->user()->isAdmin == 1) {
-            toastr()->success('Anda Berhasil login!');
-            return '/home';
+            
+            redirect()->route('dashboard')->with('success','Anda Berhasil Login 😉') ;
         }
-        toastr()->success('Anda Berhasil login!');
-        return '/';
+        redirect()->route('dashboard')->with('success','Anda Berhasil Login 😉') ;
     }
 
     /**

@@ -24,11 +24,9 @@ class ExpendituresCreate extends Component
             'nominal' => $this->nominal,
         ]);
 
-        toastr()->success('Data Berhasil Ditambahkan');
-
         $this->reset(['date', 'description', 'nominal']);
 
-        redirect()->route('expenditures.index');
+        redirect()->route('expenditures.index')->with('success','Data Berhasil Ditambah');
     }
     public function render()
     {

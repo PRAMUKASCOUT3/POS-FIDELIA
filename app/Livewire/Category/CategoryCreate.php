@@ -23,11 +23,11 @@ class CategoryCreate extends Component
 
         Category::create(['name' => $this->name]);
 
-        toastr()->success('Data Berhasil Ditambahkan!');
+        
 
         $this->reset(['name']);
 
-        redirect()->route('category.index');
+        redirect()->route('category.index')->with('success','Data Berhasil Ditambah');
     }
 
 }

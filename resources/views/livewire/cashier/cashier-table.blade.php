@@ -38,10 +38,6 @@
                                             @endforeach
                                         </ul>
                                     
-                                        <!-- Pagination Links -->
-                                        <div class="mt-3">
-                                            {{ $product->links() }}
-                                        </div>
                                     @else
                                         <p class="mt-2">Tidak ada produk ditemukan.</p>
                                     @endif
@@ -116,18 +112,17 @@
 
                                     <div>
                                         <label for="amountPaid">Bayar</label>
-                                        <div class="d-flex align-items-center">
+                                        <div class="input-group">
                                             <span class="input-group-text">Rp.</span>
-                                            <input type="number" wire:model.live="amount_paid" class="form-control"
-                                                id="amountPaid" min="0" placeholder="Masukkan jumlah pembayaran">
+                                            <input type="text" wire:model.live="amount_paid" class="form-control"
+                                                id="amountPaid" placeholder="0">
                                         </div>
                                     </div>
 
                                     <div>
                                         <label for="kembali">Kembalian</label>
-                                        <input type="text" id="kembali"
-                                            value="Rp. {{ number_format($change, 0, ',', '.') }}" class="form-control"
-                                            readonly>
+                                        <input id="kembali" value="Rp. {{ number_format($change, 0, ',', '.') }}"
+                                            class="form-control" readonly>
                                     </div>
                                 </div>
 

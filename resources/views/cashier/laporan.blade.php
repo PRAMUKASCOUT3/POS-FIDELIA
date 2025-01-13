@@ -40,6 +40,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama Kasir <i class="fas fa-user"></i></th>
                                 <th>Kode Transaksi <i class="fas fa-code"></i></th>
                                 <th>Tanggal <i class="fas fa-calendar-alt"></i></th>
@@ -52,22 +53,21 @@
                         </thead>
                         <tbody>
                             @php
+                                $no = 0;
                                 $groupedCashier = $cashier->groupBy('code');
                             @endphp
                             @foreach ($groupedCashier as $code => $items)
                                 <tr>
+                                    <td rowspan="{{ $items->count() }}">{{ ++$no }}</td>
                                     <td rowspan="{{ $items->count() }}">{{ $items->first()->user->name }}</td>
                                     <td rowspan="{{ $items->count() }}">{{ $code }}</td>
                                     <td rowspan="{{ $items->count() }}">{{ $items->first()->date }}</td>
                                     <td>{{ $items->first()->product->name }}</td>
                                     <td>{{ $items->first()->total_item }}</td>
-                                    <td rowspan="{{ $items->count() }}">Rp.
-                                        {{ number_format($items->sum('subtotal'), 0, ',', '.') }}</td>
-                                    <td rowspan="{{ $items->count() }}">Rp.
-                                        {{ number_format($items->first()->amount_paid, 0, ',', '.') }}</td>
+                                    <td rowspan="{{ $items->count() }}">Rp. {{ number_format($items->sum('subtotal'), 0, ',', '.') }}</td>
+                                    <td rowspan="{{ $items->count() }}">Rp. {{ number_format($items->first()->amount_paid, 0, ',', '.') }}</td>
                                     <td rowspan="{{ $items->count() }}">
-                                        <span
-                                            class="btn bedge bg-success text-white">{{ ucfirst($items->first()->status) }}</span>
+                                        <span class="btn badge bg-success text-white">{{ ucfirst($items->first()->status) }}</span>
                                     </td>
                                 </tr>
                                 @foreach ($items->slice(1) as $item)
@@ -78,36 +78,33 @@
                                 @endforeach
                             @endforeach
                         </tbody>
-
                         @php
                             $total_pendapatan = $cashier->sum('subtotal');
-
                             $pengeluaran = $expenditure->sum('nominal');
-
                             $total_semua = $total_pendapatan - $pengeluaran;
                         @endphp
-                        <tr>
-                            <td>Total Pendapatan <i class="fas fa-hand-holding-usd"></i></td>
-                            <td colspan="4"></td>
-                            <td>Rp. {{ number_format($total_pendapatan, 2) }}</td>
-                            <td colspan="3"></td>
-
-                        </tr>
-                        <tr>
-                            <td>Pengeluaran <i class="fas fa-file-invoice-dollar"></i></td>
-                            <td colspan="4"></td>
-                            <td>Rp. {{ number_format($pengeluaran, 2) }}</td>
-                            <td colspan="3"></td>
-
-                        </tr>
-                        <tr>
-                            <td>Total Keseluruhan <i class="fas fa-money-check-alt"></i></td>
-                            <td colspan="4"></td>
-                            <td>Rp. {{ number_format($total_semua, 2) }}</td>
-                            <td colspan="3"></td>
-
-                        </tr>
+                        <tfoot>
+                            <tr>
+                                <td>Total Pendapatan <i class="fas fa-hand-holding-usd"></i></td>
+                                <td colspan="4"></td>
+                                <td>Rp. {{ number_format($total_pendapatan, 2) }}</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>Pengeluaran <i class="fas fa-file-invoice-dollar"></i></td>
+                                <td colspan="4"></td>
+                                <td>Rp. {{ number_format($pengeluaran, 2) }}</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>Total Keseluruhan <i class="fas fa-money-check-alt"></i></td>
+                                <td colspan="4"></td>
+                                <td>Rp. {{ number_format($total_semua, 2) }}</td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tfoot>
                     </table>
+                    
                 </div>
 
 

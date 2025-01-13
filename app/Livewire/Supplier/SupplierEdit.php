@@ -39,7 +39,7 @@ class SupplierEdit extends Component
             'address' => $this->address,
         ]); 
 
-        toastr()->success('Data Berhasil Diubah!');
-        return redirect()->route('supplier.index');
+       
+        return redirect()->route('supplier.index')->with('success','Data Berhasil Diubah');
     }
 }

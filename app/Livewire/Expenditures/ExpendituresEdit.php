@@ -29,8 +29,8 @@ class ExpendituresEdit extends Component
         $expenditure = Expenditure::find($this->expenditure_id);
         $expenditure->update($validatedData);
 
-        toastr()->success('Data Berhasil Diubah!');
-        return redirect()->route('expenditures.index');
+        
+        return redirect()->route('expenditures.index')->with('success','Data Berhasil Diubah');
     }
 
     public function render()

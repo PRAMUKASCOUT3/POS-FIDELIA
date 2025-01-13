@@ -12,7 +12,7 @@ class CashierTable extends Component
 {
     public $items = [];
     public $subtotal = 0;
-    public $amount_paid = 0;
+    public $amount_paid;
     public $total_item = 0;
     public $date;
     public $status = 'pending';
@@ -72,8 +72,11 @@ class CashierTable extends Component
             return;
         }
 
+        // Hapus format Rupiah dari amount_paid
+        $amountPaid = $this->removeRupiahFormat($this->amount_paid);
+
         // Validasi pembayaran
-        if ($this->amount_paid < $this->subtotal) {
+        if ((float) $amountPaid < $this->subtotal) {
             toastr()->error('Jumlah pembayaran tidak cukup!');
             return;
         }
@@ -86,7 +89,7 @@ class CashierTable extends Component
                 'date' => now(), // Menggunakan waktu sekarang sebagai tanggal transaksi
                 'total_item' => $item['stock'], // Menyimpan jumlah item per produk
                 'subtotal' => $item['price_sell'] * $item['stock'], // Subtotal per item
-                'amount_paid' => $this->amount_paid,
+                'amount_paid' => $amountPaid, // Gunakan nilai tanpa format
                 'status' => 'completed',
             ]);
 
@@ -104,18 +107,19 @@ class CashierTable extends Component
         session(['transaction' => [
             'items' => $this->items,
             'subtotal' => $this->subtotal,
-            'amount_paid' => $this->amount_paid,
-            'change' => $this->amount_paid - $this->subtotal,
+            'amount_paid' => $amountPaid,
+            'change' => $amountPaid - $this->subtotal,
         ]]);
 
-        toastr()->success('Transaksi Berhasil!');
+        
 
         // Reset form
         $this->reset(['items', 'subtotal', 'amount_paid']);
 
         // Redirect ke halaman cetak
-        return redirect()->route('cashier.print');
+        return redirect()->route('cashier.print')->with('success','Transaksi Berhasil');
     }
+
 
 
     public function clear()
@@ -126,13 +130,39 @@ class CashierTable extends Component
 
     public function calculateChange()
     {
-        $this->change = (float) $this->amount_paid - (float) $this->subtotal;
+        // Hapus format sebelum kalkulasi
+        $amountPaid = $this->formatRupiah($this->amount_paid, false);
+        $this->change = (float) $amountPaid - (float) $this->subtotal;
     }
 
-    // Fungsi yang otomatis dipanggil ketika amount_paid diperbarui
     public function updatedAmountPaid()
     {
+        // Hapus format sebelum menyimpan
+        $this->amount_paid = $this->formatRupiah($this->amount_paid, false);
+
+        // Terapkan kembali format Rupiah
+        $this->amount_paid = $this->formatRupiah($this->amount_paid);
+
+        // Hitung kembalian
         $this->calculateChange();
+    }
+
+    private function formatRupiah($value, $formatted = true)
+    {
+        if ($formatted) {
+            // Pastikan nilai diubah menjadi float sebelum diformat
+            $value = (float) str_replace(',', '.', preg_replace('/[^\d]/', '', $value)); // Ubah menjadi angka
+            return number_format($value);
+        }
+
+        // Hapus format Rupiah
+        return preg_replace('/[^\d]/', '', $value);
+    }
+
+
+    private function removeRupiahFormat($value)
+    {
+        return preg_replace('/[^\d]/', '', $value); // Hapus semua karakter kecuali angka
     }
 
     public function updatingSearch()

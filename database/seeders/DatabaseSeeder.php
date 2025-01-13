@@ -30,6 +30,12 @@ class DatabaseSeeder extends Seeder
                 'isAdmin' => 0
             ],
         ]);
-        \App\Models\User::factory()->count(20)->create(); 
+        \App\Models\User::factory()->count(20)->create();
+        $this->call([
+            SupplierSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ExpenditureSeeder::class,
+        ]); 
     }
 }

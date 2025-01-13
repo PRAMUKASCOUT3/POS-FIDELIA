@@ -36,8 +36,7 @@ class UserCreate extends Component
 
         $this->reset(['name','email','password','code']);
         $this->code = 'US' . str_pad(User::max('id') + 1 , 4 , '0' , STR_PAD_LEFT);
-        toastr()->success( 'Data Berhasl Ditambah!');
-        return redirect()->route('pengguna.index');
+        return redirect()->route('pengguna.index')->with('success','Data Berhasil Ditambah');
     }
     public function render()
     {

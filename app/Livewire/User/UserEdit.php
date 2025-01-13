@@ -27,8 +27,8 @@ class UserEdit extends Component
         $user->email = $this->email;
         $user->save();
 
-        toastr()->success( 'Data Berhasil Diubah');
-        return redirect()->route('pengguna.index');
+        
+        return redirect()->route('pengguna.index')->with('success','Data Berhasil Diubah');
     }
     public function render()
     {

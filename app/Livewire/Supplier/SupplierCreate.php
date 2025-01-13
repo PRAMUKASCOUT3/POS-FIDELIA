@@ -29,11 +29,10 @@ class SupplierCreate extends Component
         if(!$this->validate()){
             toastr()->error('Data Ada Yang salah!');
         }
-        toastr()->success('Data Berhasil Ditambahkan!');
 
         $this->reset(['name', 'contact_person', 'address']);
 
-       redirect()->route('supplier.index');
+       redirect()->route('supplier.index')->with('success','Data Berhasil Ditambah');
     }
 
     public function render()

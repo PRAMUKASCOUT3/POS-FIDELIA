@@ -36,8 +36,8 @@ class ProductEdit extends Component
         $product->price_sell = $this->price_sell;
         $product->unit = $this->unit;
         $product->save();
-        toastr()->success('Data Berhasil Diubah!');
-        return redirect()->route('product.index');
+       
+        return redirect()->route('product.index')->with('success','Data Berhasil Diubah');
     }
     public function render()
     {
