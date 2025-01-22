@@ -64,13 +64,16 @@
                                 <input type="text" class="form-control" id="email" name="email"
                                     placeholder="Enter your email" autofocus />
                                 <label for="email">Email</label>
+                                @error('email')
+                                    <span class="text-danger">
+                                        {{ $message }} </span>
+                                        @enderror
                             </div>
                             <div class="mb-5">
                                 <div class="form-password-toggle">
                                     <div class="input-group input-group-merge">
                                         <div class="form-floating form-floating-outline">
-                                            <input type="password" id="password" class="form-control"
-                                                name="password"
+                                            <input type="password" id="password" class="form-control" name="password"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password" />
                                             <label for="password">Password</label>
@@ -79,6 +82,10 @@
                                                 class="ri-eye-off-line ri-20px"></i></span>
                                     </div>
                                 </div>
+                                @error('password')
+                                    <span class="text-danger">
+                                        {{ $message }}</span>
+                                        @enderror
                             </div>
                             <div class="mb-5">
                                 <button class="btn btn-primary d-grid w-100" type="submit">login</button>
