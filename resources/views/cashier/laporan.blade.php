@@ -37,104 +37,60 @@
                 <!-- Transaction report table -->
                 <h5 class="card-title">Laporan Transaksi</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table id="example" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Kasir <i class="fas fa-user"></i></th>
                                 <th>Kode Transaksi <i class="fas fa-code"></i></th>
                                 <th>Tanggal <i class="fas fa-calendar-alt"></i></th>
-                                <th>Nama Produk <i class="fas fa-file-signature"></i></th>
-                                <th>Jumlah Produk <i class="fas fa-cubes"></i></th>
                                 <th>Subtotal <i class="fas fa-dollar-sign"></i></th>
                                 <th>Bayar <i class="fas fa-hand-holding-usd"></i></th>
                                 <th>Status <i class="fas fa-stream"></i></th>
+                                <th>Aksi <i class="fas fa-cog"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
                                 $no = 0;
-                                $groupedCashier = $cashier->groupBy('code');
                             @endphp
-                            @foreach ($groupedCashier as $code => $items)
+                            @foreach ($cashier as $index => $transactions)
                                 <tr>
-                                    <td rowspan="{{ $items->count() }}">{{ ++$no }}</td>
-                                    <td rowspan="{{ $items->count() }}">{{ $items->first()->user->name }}</td>
-                                    <td rowspan="{{ $items->count() }}">{{ $code }}</td>
-                                    <td rowspan="{{ $items->count() }}">{{ $items->first()->date }}</td>
-                                    <td>{{ $items->first()->product->name }}</td>
-                                    <td>{{ $items->first()->total_item }}</td>
-                                    <td rowspan="{{ $items->count() }}">Rp. {{ number_format($items->sum('subtotal'), 0, ',', '.') }}</td>
-                                    <td rowspan="{{ $items->count() }}">Rp. {{ number_format($items->first()->amount_paid, 0, ',', '.') }}</td>
-                                    <td rowspan="{{ $items->count() }}">
-                                        <span class="btn badge bg-success text-white">{{ ucfirst($items->first()->status) }}</span>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $transactions->first()->code }}</td>
+                                    <td>{{ $transactions->first()->date }}</td>
+                                    <td>Rp. {{ number_format($transactions->sum('subtotal'), '0') }}</td>
+                                    <td>Rp. {{ number_format($transactions->first()->amount_paid, '0') }}</td>
+                                    <td><span class="badge bg-success">{{ $transactions->first()->status }}</span></td>
+                                    <td>
+                                        <a href="{{ route('cashier.show', $transactions->first()->code) }}">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
                                     </td>
                                 </tr>
-                                @foreach ($items->slice(1) as $item)
-                                    <tr>
-                                        <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->total_item }}</td>
-                                    </tr>
-                                @endforeach
                             @endforeach
                         </tbody>
-                        @php
-                            $total_pendapatan = $cashier->sum('subtotal');
-                            $pengeluaran = $expenditure->sum('nominal');
-                            $total_semua = $total_pendapatan - $pengeluaran;
-                        @endphp
                         <tfoot>
                             <tr>
                                 <td>Total Pendapatan <i class="fas fa-hand-holding-usd"></i></td>
-                                <td colspan="4"></td>
-                                <td>Rp. {{ number_format($total_pendapatan, 2) }}</td>
+                                <td colspan="2"></td>
+                                <td>Rp. {{ number_format($total_pendapatan, 2, ',', '.') }}</td>
                                 <td colspan="3"></td>
                             </tr>
                             <tr>
                                 <td>Pengeluaran <i class="fas fa-file-invoice-dollar"></i></td>
-                                <td colspan="4"></td>
-                                <td>Rp. {{ number_format($pengeluaran, 2) }}</td>
+                                <td colspan="2"></td>
+                                <td>Rp. {{ number_format($pengeluaran, 2, ',', '.') }}</td>
                                 <td colspan="3"></td>
                             </tr>
                             <tr>
                                 <td>Total Keseluruhan <i class="fas fa-money-check-alt"></i></td>
-                                <td colspan="4"></td>
-                                <td>Rp. {{ number_format($total_semua, 2) }}</td>
+                                <td colspan="2"></td>
+                                <td>Rp. {{ number_format($total_semua, 2, ',', '.') }}</td>
                                 <td colspan="3"></td>
                             </tr>
                         </tfoot>
+                        
                     </table>
-                    
-                </div>
-
-
-                <!-- Pagination -->
-                <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
-                    <p class="block text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                        Page {{ $cashier->currentPage() }} of {{ $cashier->lastPage() }}
-                    </p>
-                    <div class="flex gap-2">
-                        @if ($cashier->onFirstPage())
-                            <button
-                                class="select-none rounded-lg border py-2 px-4 text-xs font-bold text-gray-900 opacity-50 cursor-not-allowed"
-                                disabled>Previous</button>
-                        @else
-                            <a href="{{ $cashier->previousPageUrl() }}">
-                                <button
-                                    class="select-none rounded-lg border py-2 px-4 text-xs font-bold text-gray-900">Previous</button>
-                            </a>
-                        @endif
-                        @if ($cashier->hasMorePages())
-                            <a href="{{ $cashier->nextPageUrl() }}">
-                                <button
-                                    class="select-none rounded-lg border py-2 px-4 text-xs font-bold text-gray-900">Next</button>
-                            </a>
-                        @else
-                            <button
-                                class="select-none rounded-lg border py-2 px-4 text-xs font-bold text-gray-900 opacity-50 cursor-not-allowed"
-                                disabled>Next</button>
-                        @endif
-                    </div>
                 </div>
             </div>
 

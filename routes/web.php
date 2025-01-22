@@ -61,5 +61,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admin/kasir/riwayat',[CashierController::class,'history'])->name('cashier.riwayat');
     Route::get('/admin/kasir/laporan',[CashierController::class,'report'])->name('cashier.report');
     Route::get('/admin/kasir/print-pdf',[CashierController::class,'generatePDF'])->name('cashier.pdf');
+    Route::get('/admin/detail-belanja/{code}',[CashierController::class,'show'])->name('cashier.show');
         
 });

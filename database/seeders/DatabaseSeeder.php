@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
                 'isAdmin' => 1
             ],
             [
-                'name' => 'User',
-                'code' => '12345678',
-                'email' => 'user@gmail.com',
+                'name' => 'Kasir',
+                'code' => 'US364726',
+                'email' => 'kasir@gmail.com',
                 'password' => Hash::make('password'),
                 'isAdmin' => 0
             ],

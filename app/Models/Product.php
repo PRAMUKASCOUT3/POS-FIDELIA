@@ -56,7 +56,7 @@ class Product extends Model
 
     public function cashiers():HasMany
     {
-        return $this->hasMany(Cashier::class);
+        return $this->hasMany(Transaction::class);
     }
 
     

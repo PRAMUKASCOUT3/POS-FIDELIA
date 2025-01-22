@@ -43,13 +43,13 @@ class ProductCreate extends Component
             'unit' => $this->unit,
         ]);
 
-       
+        toastr()->success('Data Berhasil Ditambahkan!');
         
         $this->reset(['category_id', 'name', 'brand', 'stock', 'price_buy', 'price_sell', 'unit']);
         
         $this->code = 'BR' . str_pad(Product::max('id') + 1, 4, '0', STR_PAD_LEFT);
 
-        return redirect()->route('product.index')->with('success','Data Berhasil Ditambah');
+        return redirect()->route('product.index');
     }
     public function render()
     {
