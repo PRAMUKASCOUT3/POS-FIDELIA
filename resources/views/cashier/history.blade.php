@@ -8,13 +8,13 @@
                 <table id="example" class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Kode Transaksi <i class="fas fa-code"></i></th>
                             <th>Tanggal <i class="fas fa-calendar-alt"></i></th>
-                            <th>Nama Produk <i class="fas fa-file-signature"></i></th>
-                            <th>Jumlah Produk <i class="fas fa-cubes"></i></th>
                             <th>Subtotal <i class="fas fa-dollar-sign"></i></th>
                             <th>Bayar <i class="fas fa-hand-holding-usd"></i></th>
                             <th>Status <i class="fas fa-stream"></i></th>
+                            <th>Aksi <i class="fas fa-cogs"></i></th>
                         </tr>
                     </thead>
                     <tbody>
