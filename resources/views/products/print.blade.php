@@ -8,76 +8,96 @@
     <title>{{ $title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                font-size: 12px;
-            }
-    
-            .container {
-                margin: 20px auto;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 5px;
-                border: 1px solid #ddd;
-            }
-    
-            .card-header {
-                background-color: #007bff;
-                color: white;
-                padding: 10px;
-                border-radius: 5px;
-                text-align: center;
-                font-size: 18px;
-            }
-    
-            .table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-    
-            .table th,
-            .table td {
-                border: 1px solid #dee2e6;
-                padding: 8px;
-                text-align: center;
-                vertical-align: middle;
-            }
-    
-            .table th {
-                background-color: #f8f9fa;
-                font-weight: bold;
-            }
-    
-            .tfoot td {
-                font-weight: bold;
-                background-color: #f1f1f1;
-            }
-    
-            .signature {
-                margin-top: 30px;
-                text-align: right;
-            }
-    
-            .signature span {
-                display: inline-block;
-            }
-    
-            .signature u {
-                margin-top: 30px;
-                display: block;
-                font-weight: bold;
-            }
-        </style>
-        
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .card-header {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            max-width: 100px;
+        }
+
+        .header-text {
+            margin-top: -100px;
+            text-align: center;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .tfoot td {
+            font-weight: bold;
+            background-color: #f1f1f1;
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .signature u {
+            margin-top: 30px;
+            display: block;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
+    @php
+        $tanggal = \Carbon\Carbon::now();
+        $bulanTahun = $tanggal->translatedFormat('F Y'); // Menampilkan bulan dan tahun dalam bahasa Indonesia
+        $users = Auth::user();
+    @endphp
+
     <div class="container mt-4">
         <div class="card">
-            <div class="card-header">
-                <h2 class="mb-4">{{ $title }}</h2>
+            <div class="card-header bg-light">
+                <div class="header-content">
+                    <img src="C:\laragon\www\POS-FIDELIA\public\assets\img\JOJO.png" alt="Logo" class="logo">
+                    <div class="header-text">
+                        <h2 class="mb-0">Laporan Pengguna/Kasir</h2>
+                        <p class="mb-0">Jambi, {{ $bulanTahun }}</p>
+                        <p class="mb-0">Marene, Kel.Eka jaya Kec.Paal Merah</p>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table table-striped mt-2">
@@ -149,22 +169,14 @@
                         <td></td> <!-- Make sure to leave a cell empty if not used -->
                     </tr>
                 </table>
-
-                <div class="signature">
-                    @php
-                        $tanggal = \Carbon\Carbon::now()->format('Y-m-d');
-                    @endphp
-                    <span>{{ $tanggal }}</span>, <span>Jambi</span>
-                    <br><br><br><br><br>
-                    <span><u>{{ $user->name }}</u></span>
+                <div class="signature text-end mt-4">
+                    <p>{{ $tanggal->format('Y-m-d') }}, Jambi</p>
+                    <br><br><br>
+                    <p><u>{{ $users->name }}</u></p>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
 </body>
 
 </html>

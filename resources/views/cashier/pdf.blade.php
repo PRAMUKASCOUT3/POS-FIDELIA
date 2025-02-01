@@ -23,12 +23,24 @@
         }
 
         .card-header {
-            background-color: #007bff;
-            color: white;
             padding: 10px;
             border-radius: 5px;
-            text-align: center;
             font-size: 18px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            max-width: 100px;
+        }
+
+        .header-text {
+            margin-top: -100px;
+            text-align: center;
         }
 
         .table {
@@ -60,25 +72,32 @@
             text-align: right;
         }
 
-        .signature span {
-            display: inline-block;
-        }
-
         .signature u {
             margin-top: 30px;
             display: block;
             font-weight: bold;
         }
     </style>
-
-
 </head>
 
 <body>
-    <div class="container">
-        <div class="card" style="margin: 20px 0; padding: 15px;">
-            <div class="card-header">
-                <h2>{{ $title }}</h2>
+    @php
+        $tanggal = \Carbon\Carbon::now();
+        $bulanTahun = $tanggal->translatedFormat('F Y'); // Menampilkan bulan dan tahun dalam bahasa Indonesia
+        $users = Auth::user();
+    @endphp
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-light">
+                <div class="header-content">
+                    <img src="C:\laragon\www\POS-FIDELIA\public\assets\img\JOJO.png" alt="Logo" class="logo">
+                    <div class="header-text">
+                        <h2 class="mb-0">Laporan Pengguna/Kasir</h2>
+                        <p class="mb-0">Jambi, {{ $bulanTahun }}</p>
+                        <p class="mb-0">Marene, Kel.Eka jaya Kec.Paal Merah</p>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -139,24 +158,15 @@
                         </tr>
                     </tfoot>
                 </table>
-                <div class="signature">
-                    @php
-                        $tanggal = \Carbon\Carbon::now()->format('Y-m-d');
-                    @endphp
-                    <span>{{ $tanggal }}, Jambi</span>
+
+                <div class="signature text-end mt-4">
+                    <p>{{ $tanggal->format('Y-m-d') }}, Jambi</p>
                     <br><br><br>
-                    <u>{{ $user->name }}</u>
+                    <p><u>{{ $users->name }}</u></p>
                 </div>
             </div>
         </div>
     </div>
-    
 </body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
-</script>
 
 </html>

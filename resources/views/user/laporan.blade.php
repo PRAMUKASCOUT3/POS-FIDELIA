@@ -7,7 +7,7 @@
                 <a href="{{ route('pengguna.print') }}" class="btn btn-danger mb-3">Download PDF <i
                         class="fas fa-file-pdf"></i></a>
                 <h5 class="card-title">Laporan Pengguna / Kasir</h5>
-                <table class="table table-striped mb-0">
+                <table id="example" class="table table-striped mb-0">
                     <thead>
                         <tr>
                             <th>No</th>
