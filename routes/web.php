@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin',])->group(function () {
    
     Route::get('/', [UserController::class, 'index'])->name('home');
     
@@ -45,6 +45,7 @@ Route::get('/admin/produk/{id}/edit',[ProductController::class, 'edit'])->name('
 Route::get('/admin/produk/laporan',[ProductController::class,'report'])->name('product.report');
 Route::get('/admin/produk/print',[ProductController::class,'generatePDF'])->name('product.print');
 Route::delete('/admin/produk/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');
+Route::get('/admin/produk/detail/{id}',[ProductController::class, 'detail'])->name('product.detail');
 
 
 

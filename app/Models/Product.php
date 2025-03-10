@@ -24,7 +24,36 @@ class Product extends Model
         'unit',
     ];
 
-    public function category():BelongsTo
+    protected static function booted()
+    {
+        // Saat produk pertama kali dibuat
+        static::created(function ($product) {
+            \App\Models\ProductStock::create([
+                'product_id' => $product->id,
+                'added_stock' => $product->stock,
+                'stock_date' => now(),
+            ]);
+        });
+
+        // Saat produk diperbarui dan stoknya berubah
+        static::updated(function ($product) {
+            if ($product->isDirty('stock')) { // Cek apakah field 'stock' berubah
+                \App\Models\ProductStock::create([
+                    'product_id' => $product->id,
+                    'added_stock' => max($product->stock - $product->getOriginal('stock'), 0),
+                    'stock_date' => now(),
+                ]);
+            }
+        });
+    }
+
+
+    public function stocks()
+    {
+        return $this->hasMany(ProductStock::class);
+    }
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -54,10 +83,8 @@ class Product extends Model
         return $newKode;
     }
 
-    public function cashiers():HasMany
+    public function cashiers(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
-
-    
 }

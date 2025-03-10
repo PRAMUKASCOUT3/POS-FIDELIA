@@ -7,27 +7,29 @@
                 <a href="{{ route('pengguna.print') }}" class="btn btn-danger mb-3">Download PDF <i
                         class="fas fa-file-pdf"></i></a>
                 <h5 class="card-title">Laporan Pengguna / Kasir</h5>
-                <table id="example" class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kode Kasir <i class="fas fa-code"></i></th>
-                            <th>Nama Pengguna / Kasir <i class="fas fa-users"></i></th>
-                            <th>Email <i class="fas fa-envelope"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $index => $user)
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped mb-0">
+                        <thead>
                             <tr>
-                                <!-- Nomor urut dihitung berdasarkan halaman -->
-                                <td class="text-bold-500">{{ $users->firstItem() + $index }}</td>
-                                <td>{{ $user->code }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <th>No</th>
+                                <th>Kode Kasir <i class="fas fa-code"></i></th>
+                                <th>Nama Pengguna / Kasir <i class="fas fa-users"></i></th>
+                                <th>Email <i class="fas fa-envelope"></i></th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $index => $user)
+                                <tr>
+                                    <!-- Nomor urut dihitung berdasarkan halaman -->
+                                    <td class="text-bold-500">{{ $users->firstItem() + $index }}</td>
+                                    <td>{{ $user->code }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
                     <p class="block  text-sm antialiased font-normal leading-normal text-blue-gray-900">
                         Page {{ $users->currentPage() }} of {{ $users->lastPage() }}

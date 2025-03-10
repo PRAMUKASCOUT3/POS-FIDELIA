@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expenditure;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -41,8 +42,8 @@ class CashierController extends Controller
     public function report(Request $request)
     {
         // Mengambil input filter tanggal
-        $start_date = $request->input('start_date');
-        $end_date = $request->input('end_date');
+        $start_date = $request->input('start_date') ? Carbon::parse($request->input('start_date'))->startOfDay() : null;
+        $end_date = $request->input('end_date') ? Carbon::parse($request->input('end_date'))->endOfDay() : null;
 
         // Filter data kasir berdasarkan tanggal
         $cashier = Transaction::when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
@@ -72,8 +73,8 @@ class CashierController extends Controller
     public function generatePDF(Request $request)
     {
         // Mengambil input filter tanggal
-        $start_date = $request->input('start_date');
-        $end_date = $request->input('end_date');
+        $start_date = $request->input('start_date') ? Carbon::parse($request->input('start_date'))->startOfDay() : null;
+        $end_date = $request->input('end_date') ? Carbon::parse($request->input('end_date'))->endOfDay() : null;
 
         // Query untuk transaksi dengan filter tanggal
         $cashier = Transaction::with('product')

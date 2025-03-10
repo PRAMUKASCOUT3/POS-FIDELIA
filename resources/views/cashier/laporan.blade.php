@@ -5,31 +5,29 @@
         <div class="card">
             <div class="card-body">
                 <!-- Date filter form -->
-                <div class="d-flex align-items-center mb-4">
+                <div class="d-flex flex-column flex-md-row align-items-center mb-4 gap-3">
                     <!-- PDF Download Form -->
-                    <form action="{{ route('cashier.pdf') }}" method="GET" style="margin-right: 10px">
+                    <form action="{{ route('cashier.pdf') }}" method="GET" class=" w-md-auto">
                         <input type="hidden" name="start_date" value="{{ request('start_date') }}">
                         <input type="hidden" name="end_date" value="{{ request('end_date') }}">
-                        <button type="submit" class="btn btn-danger">Download PDF <i class="fas fa-file-pdf"></i></button>
+                        <button type="submit" class="btn btn-danger ">Download PDF <i class="fas fa-file-pdf"></i></button>
                     </form>
                 
                     <!-- Filter Form -->
-                    <form method="GET" action="{{ route('cashier.report') }}" class="d-flex align-items-center">
-                        <div class="d-flex align-items mb-4" style="gap: 10px;">
-                            <div>
-                                <label for="start_date">Tanggal Mulai:</label>
-                                <input type="date" name="start_date" class="form-control"
-                                    value="{{ request('start_date') }}">
+                    <form method="GET" action="{{ route('cashier.report') }}" class="d-flex flex-column flex-md-row align-items-center gap-3 ">
+                        <div class="d-flex flex-column flex-md-row gap-3 ">
+                            <div class="">
+                                <label for="start_date" class="form-label">Tanggal Mulai:</label>
+                                <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}">
                             </div>
-                            <div>
-                                <label for="end_date">Tanggal Akhir:</label>
-                                <input type="date" name="end_date" class="form-control"
-                                    value="{{ request('end_date') }}">
+                            <div class="">
+                                <label for="end_date" class="form-label">Tanggal Akhir:</label>
+                                <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}">
                             </div>
                         </div>
-                        <div class="d-flex align-items" style="gap: 10px; margin-left: 10px;">
-                            <button type="submit" class="btn btn-primary">Filter <i class="fas fa-filter fa-xs"></i></button>
-                            <a href="{{ route('cashier.report') }}" class="btn btn-danger">Reset <i class="fas fa-sync-alt fa-xs"></i></a>
+                        <div class="d-flex gap-3  w-md-auto">
+                            <button type="submit" class="btn btn-primary ">Filter <i class="fas fa-filter fa-xs"></i></button>
+                            <a href="{{ route('cashier.report') }}" class="btn btn-danger ">Reset <i class="fas fa-sync-alt fa-xs"></i></a>
                         </div>
                     </form>
                 </div>
@@ -57,7 +55,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $transactions->first()->code }}</td>
-                                    <td>{{ $transactions->first()->date }}</td>
+                                    <td>{{ Carbon\Carbon::parse($transactions->first()->date)->format('d-m-Y')  }}</td>
                                     <td>Rp. {{ number_format($transactions->sum('subtotal'), '0') }}</td>
                                     <td>Rp. {{ number_format($transactions->first()->amount_paid, '0') }}</td>
                                     <td><span class="badge bg-success">{{ $transactions->first()->status }}</span></td>

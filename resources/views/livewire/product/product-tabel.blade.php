@@ -39,14 +39,18 @@
                                     <td>Rp.{{ number_format($item->price_sell) }}</td>
                                     <td>{{ $item->unit }}</td>
                                     <td>
-                                        <a href="{{ route('product.edit', $item->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                        <form id="deleteForm{{ $item->id }}" class="d-inline"
-                                            action="{{ route('product.delete', $item->id) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete({{ $item->id }})">Hapus</button>
-                                        </form>
+                                        <div class="d-flex justify-content-center ">
+                                            <a href="{{ route('product.detail',$item->id) }}" class="btn btn-primary btn-sm me-2">Detail</a>
+                                            <a href="{{ route('product.edit', $item->id) }}"
+                                                class="btn btn-info btn-sm me-2">Edit</a>
+                                            <form id="deleteForm{{ $item->id }}" class="d-inline"
+                                                action="{{ route('product.delete', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="confirmDelete({{ $item->id }})">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -54,7 +58,7 @@
                         @php
                             $total_buy = 0;
                             $total_sell = 0;
-                
+
                             foreach ($products as $product) {
                                 $total_buy += $product->stock * $product->price_buy;
                                 $total_sell += $product->stock * $product->price_sell;
@@ -66,7 +70,7 @@
                             <td><b>Rp.{{ number_format($total_sell) }}</b></td>
                             <td></td> <!-- Make sure to leave a cell empty if not used -->
                         </tr>
-                    </table>                    
+                    </table>
                 </div>
             </div>
         </div>

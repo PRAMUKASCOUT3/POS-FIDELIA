@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title mb-4">Data Riwayat Transaksi <i class="fas fa-history"></i></h5>
-            <div>
+            <div class="table-responsive">
                 <table id="example" class="table table-bordered">
                     <thead>
                         <tr>

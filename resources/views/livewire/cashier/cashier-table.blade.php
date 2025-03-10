@@ -15,8 +15,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
+                    
+                    <div class="col-md-6 mt-1">
                         <div class="card border border-primary">
                             <h5 class="card-header bg-primary text-white"><i class="fas fa-list"></i> Hasil Pencarian</h5>
                             <div class="card-body" style="height: 350px; overflow-y: auto;">
@@ -67,40 +67,43 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-12">
-                                <table class="table table-bordered mt-4">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama Produk <i class="fas fa-file-signature"></i></th>
-                                            <th>Jumlah <i class="fab fa-unity"></i></th>
-                                            <th>Harga <i class="fas fa-dollar-sign"></i></th>
-                                            <th>Total <i class="fas fa-funnel-dollar"></i></th>
-                                            <th>Aksi <i class="fas fa-cogs"></i></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($items as $index => $item)
+                                <div class="table-responsive">
+                                    
+                                    <table class="table table-bordered mt-4">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $item['name'] }}</td>
-                                                <td>
-                                                    <input type="number" min="1"
-                                                        wire:model.defer="items.{{ $index }}.stock"
-                                                        wire:change="updateQuantity({{ $index }}, $event.target.value)"
-                                                        class="form-control">
-                                                </td>
-                                                <td>Rp. {{ number_format($item['price_sell'], 0, ',', '.') }}</td>
-                                                <td>Rp.
-                                                    {{ number_format($item['price_sell'] * $item['stock'], 0, ',', '.') }}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-danger btn-sm"
-                                                        wire:click="removeItem({{ $index }})">
-                                                        Hapus
-                                                    </button>
-                                                </td>
+                                                <th>Nama Produk <i class="fas fa-file-signature"></i></th>
+                                                <th>Jumlah <i class="fab fa-unity"></i></th>
+                                                <th>Harga <i class="fas fa-dollar-sign"></i></th>
+                                                <th>Total <i class="fas fa-funnel-dollar"></i></th>
+                                                <th>Aksi <i class="fas fa-cogs"></i></th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($items as $index => $item)
+                                                <tr>
+                                                    <td>{{ $item['name'] }}</td>
+                                                    <td>
+                                                        <input type="number" min="1"
+                                                            wire:model.defer="items.{{ $index }}.stock"
+                                                            wire:change="updateQuantity({{ $index }}, $event.target.value)"
+                                                            class="form-control">
+                                                    </td>
+                                                    <td>Rp. {{ number_format($item['price_sell'], 0, ',', '.') }}</td>
+                                                    <td>Rp.
+                                                        {{ number_format($item['price_sell'] * $item['stock'], 0, ',', '.') }}
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger btn-sm"
+                                                            wire:click="removeItem({{ $index }})">
+                                                            Hapus
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <!-- Informasi Total Belanja -->
                                 <div class="d-flex justify-content-between align-items-center">
@@ -110,7 +113,7 @@
                                             class="form-control" readonly>
                                     </div>
 
-                                    <div>
+                                    <div style="margin:0px 10px">
                                         <label for="amountPaid">Bayar</label>
                                         <div class="input-group">
                                             <span class="input-group-text">Rp.</span>
@@ -119,7 +122,7 @@
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div >
                                         <label for="kembali">Kembalian</label>
                                         <input id="kembali" value="Rp. {{ number_format($change, 0, ',', '.') }}"
                                             class="form-control" readonly>
